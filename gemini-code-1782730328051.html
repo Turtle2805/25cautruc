@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chuyên Đề 25 Cấu Trúc Biến Đổi Câu - Ms Lê Hằng English</title>
+    <!-- Tích hợp Google Fonts tròn trịa, thân thiện chuẩn Duolingo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Quicksand:wght@500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #74B9FF, #A8E6CF, #FFD3B6, #FFAAA5);
+            --correct-color: #00D26A;
+            --wrong-color: #FF4757;
+            --text-main: #2D3436;
+            --card-bg: rgba(255, 255, 255, 0.96);
+            --purple-accent: #8854C0;
+        }
+
+        body {
+            font-family: 'Quicksand', 'Nunito', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            color: var(--text-main);
+            background: var(--primary-gradient);
+            background-size: 400% 400%;
+            animation: loangMauNenChuyenDong 20s ease infinite;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        @keyframes loangMauNenChuyenDong {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .pattern-overlay-layer {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.15;
+            mix-blend-mode: overlay;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'><g fill='%23FFFFFF'><path d='M20,20 L26,32 L38,34 L29,42 L32,54 L20,47 L8,54 L11,42 L2,34 L14,32 Z'/><circle cx='120' cy='40' r='10'/><path d='M40,110 C40,98 60,92 80,104 C100,92 120,98 120,110 C120,122 40,122 40,110 Z' opacity='0.6'/><path d='M130,120 Q142,102 154,120 T166,120' stroke='%23FFFFFF' stroke-width='3' fill='none'/></g></svg>");
+            animation: movingBackgroundPattern 40s linear infinite;
+        }
+
+        @keyframes movingBackgroundPattern {
+            from { background-position: 0 0; }
+            to { background-position: 320px 640px; }
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        header {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.94);
+            padding: 8px 20px;
+            border-radius: 14px;
+            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.06);
+            margin-bottom: 20px;
+            border: 2px solid var(--purple-accent);
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 1rem;
+            color: var(--purple-accent);
+            margin: 0;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+        }
+
+        .important-notice-box {
+            background: #FFF9E6;
+            border: 4px dashed #FDCB6E;
+            border-radius: 20px;
+            padding: 18px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 0 rgba(253, 203, 110, 0.25);
+            text-align: center;
+        }
+
+        .notice-title {
+            font-size: 1.15rem;
+            font-weight: 900;
+            color: #D35400;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .notice-content {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #2D3436;
+            font-weight: 700;
+        }
+
+        /* CARD SỔ TAY LÝ THUYẾT VĂN BẢN THUẦN SẠCH */
+        .theory-handbook-card {
+            background: #FFFFFF;
+            border-radius: 24px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 3px solid var(--purple-accent);
+            box-shadow: 0 8px 0 rgba(136, 84, 192, 0.15);
+        }
+
+        .theory-title {
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: var(--purple-accent);
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 3px double var(--purple-accent);
+            padding-bottom: 8px;
+        }
+
+        .theory-scroll-container {
+            max-height: 350px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        /* Custom thanh cuộn cho danh sách lý thuyết */
+        .theory-scroll-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        .theory-scroll-container::-webkit-scrollbar-track {
+            background: #F1F2F6;
+            border-radius: 10px;
+        }
+        .theory-scroll-container::-webkit-scrollbar-thumb {
+            background: var(--purple-accent);
+            border-radius: 10px;
+        }
+
+        .theory-item-row {
+            background: #F8F9FA;
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            border-left: 5px solid #00C9A7;
+        }
+
+        .theory-item-title {
+            font-weight: 900;
+            color: #E84393;
+            font-size: 1.05rem;
+            margin-bottom: 4px;
+        }
+
+        .theory-item-formula {
+            font-weight: 700;
+            color: #2D3436;
+            line-height: 1.5;
+        }
+
+        /* THIẾT KẾ CARD TRẮC NGHIỆM ĐẸP */
+        .quiz-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 0 rgba(0, 0, 0, 0.05);
+            border: 3px solid #FFF;
+            position: relative;
+        }
+
+        .structure-tag {
+            background: #74B9FF;
+            color: white;
+            font-weight: 900;
+            padding: 5px 14px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            display: inline-block;
+            margin-bottom: 12px;
+            box-shadow: 0 3px 0 #0984E3;
+        }
+
+        .question-header {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 14px;
+        }
+
+        .question-number {
+            background: var(--purple-accent);
+            color: #FFF;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            margin-right: 12px;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 0 #6c3da3;
+            flex-shrink: 0;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 700;
+            line-height: 1.5;
+            color: var(--text-main);
+            margin-top: 2px;
+        }
+
+        .prompt-sentence-box {
+            background: #F1F2F6;
+            border-left: 5px solid var(--purple-accent);
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin-bottom: 18px;
+            font-size: 1.05rem;
+            font-style: italic;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .choices-grid {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .choice-btn {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            background: #FFF;
+            border: 3px solid #E2E8F0;
+            border-radius: 18px;
+            padding: 12px 18px;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            text-align: left;
+            cursor: pointer;
+            font-family: inherit;
+            color: var(--text-main);
+            box-shadow: 0 6px 0 #E2E8F0;
+            transition: all 0.1s ease;
+        }
+
+        .choice-btn:hover:not(:disabled) {
+            transform: scale(1.01) translateY(-2px);
+            border-color: #B2BEC3;
+            box-shadow: 0 8px 0 #B2BEC3;
+        }
+
+        .choice-btn:active:not(:disabled) {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #B2BEC3;
+        }
+
+        .choice-prefix {
+            background: #F1F5F9;
+            border-radius: 10px;
+            width: 28px;
+            height: 28px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            margin-right: 12px;
+            color: #64748B;
+            flex-shrink: 0;
+        }
+
+        /* Trạng thái màu sắc Đúng/Sai */
+        .choice-btn.correct-state {
+            background-color: #E6FBF1 !important;
+            border-color: var(--correct-color) !important;
+            box-shadow: 0 6px 0 #00A955 !important;
+            color: #006633 !important;
+        }
+
+        .choice-btn.correct-state .choice-prefix {
+            background-color: var(--correct-color) !important;
+            color: white !important;
+        }
+
+        .choice-btn.wrong-state {
+            background-color: #FFEBEB !important;
+            border-color: var(--wrong-color) !important;
+            box-shadow: 0 6px 0 #D63031 !important;
+            color: #99222A !important;
+        }
+
+        .choice-btn.wrong-state .choice-prefix {
+            background-color: var(--wrong-color) !important;
+            color: white !important;
+        }
+
+        .shake-animation {
+            animation: shakeEffect 0.4s ease-in-out;
+        }
+
+        @keyframes shakeEffect {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
+        }
+
+        /* KHUNG GIẢI THÍCH 4 BƯỚC */
+        .explanation-box {
+            margin-top: 18px;
+            background: #F8F9FA;
+            border-radius: 18px;
+            padding: 18px;
+            border-left: 6px solid var(--purple-accent);
+            display: none;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.04);
+        }
+
+        .explanation-title {
+            font-weight: 900;
+            color: var(--purple-accent);
+            font-size: 1.05rem;
+            margin-bottom: 10px;
+        }
+
+        .explanation-step {
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #4A5568;
+        }
+
+        .step-heading {
+            font-weight: 900;
+            color: #2D3748;
+            margin-bottom: 2px;
+        }
+
+        .footer-action-wrapper {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .submit-exam-btn {
+            background: #00D26A;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 16px 60px;
+            font-size: 1.3rem;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 8px 0 #00A955, 0 12px 25px rgba(0,0,0,0.12);
+            font-family: inherit;
+            transition: all 0.15s;
+        }
+
+        .submit-exam-btn:hover {
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 11px 0 #00A955, 0 15px 30px rgba(0,0,0,0.18);
+        }
+
+        .submit-exam-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 4px 0 #00A955;
+        }
+
+        /* POPUP MODAL TỔNG KẾT */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.55);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.25s ease;
+        }
+
+        .modal-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal-body-card {
+            background: white;
+            border-radius: 28px;
+            max-width: 500px;
+            width: 90%;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            border: 4px solid var(--purple-accent);
+            transform: scale(0.8);
+            transition: all 0.25s ease;
+        }
+
+        .modal-overlay.active .modal-body-card {
+            transform: scale(1);
+        }
+
+        .modal-header-title {
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: var(--purple-accent);
+            margin-bottom: 10px;
+        }
+
+        .modal-score-badge {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #00D26A;
+            margin: 15px 0;
+        }
+
+        .modal-comment-text {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #2D3436;
+            font-weight: 700;
+            margin-bottom: 25px;
+        }
+
+        .modal-reload-btn {
+            background: var(--purple-accent);
+            color: white;
+            border: none;
+            border-radius: 18px;
+            padding: 12px 40px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #6c3da3;
+        }
+
+        #canvas-confetti-layer {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="pattern-overlay-layer"></div>
+    <canvas id="canvas-confetti-layer"></canvas>
+
+    <div class="container">
+        <header>
+            <h1>Giáo viên tạo: Ms Lê Hằng English</h1>
+        </header>
+
+        <div class="important-notice-box">
+            <span class="notice-title">⚠️ LỜI NHẮC CỰC KỲ QUAN TRỌNG ⚠️</span>
+            <span class="notice-content">
+                Hãy đọc thật kỹ phần lý thuyết tóm tắt bên dưới trước khi làm bài.<br>
+                Sau mỗi câu bấm chọn, hãy ghi chép lại các cấu trúc tương đương vào vở để nhớ lâu nhé!
+            </span>
+        </div>
+
+        <!-- SỔ TAY LÝ THUYẾT 25 CẤU TRÚC VĂN BẢN SẠCH -->
+        <div class="theory-handbook-card">
+            <div class="theory-title">📚 TÓM TẮT SỔ TAY 25 CẤU TRÚC BIẾN ĐỔI CÂU</div>
+            <div class="theory-scroll-container" id="theory-box-target"></div>
+        </div>
+
+        <!-- VÙNG HIỂN THỊ CÁC CÂU HỎI TRẮC NGHIỆM -->
+        <div id="quiz-dynamic-render-target"></div>
+
+        <div class="footer-action-wrapper">
+            <button class="submit-exam-btn" onclick="processExamGrading()">🎉 NỘP BÀI KIỂM TRA 🎉</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="result-summary-popup">
+        <div class="modal-body-card">
+            <div class="modal-header-title">🏆 KẾT QUẢ CỦA CON 🏆</div>
+            <div class="modal-score-badge" id="score-counter-slot">0/0</div>
+            <div class="modal-comment-text" id="teacher-feedback-slot">Lời khuyên...</div>
+            <button class="modal-reload-btn" onclick="resetAndRestartQuiz()">LÀM LẠI BÀI</button>
+        </div>
+    </div>
+
+    <script>
+        // Mảng cấu trúc dữ liệu thô lý thuyết để kết xuất văn bản sạch lên giao diện
+        const theoryDataList = [
+            { id: 1, title: "1. Câu ước – Wish", formula: "S + wish + S + V2/ed (Ước cho hiện tại trái thực tế)" },
+            { id: 2, title: "2. Take & Spend", formula: "It takes/took + sb + time + to-V = S + spend/spent + time + V-ing" },
+            { id: 3, title: "3. Would rather / Prefer", formula: "S + would rather + V1 + than + V1 = S + prefer + V-ing + to + V-ing" },
+            { id: 4, title: "4. Worth + Ving / There is no point", formula: "It's pointless to-V = There is no point in + V-ing" },
+            { id: 5, title: "5. Like / Enjoy / Interested in", formula: "S + like/enjoy + V-ing = S + be + interested in / keen on + V-ing" },
+            { id: 6, title: "6. Although vs Despite / In spite of", formula: "Although + Clause = Despite / In spite of + Noun phrase / V-ing" },
+            { id: 7, title: "7. Too / Enough", formula: "S + be + too + Adj + (for sb) + to-V = S + be + not + Adj ngược + enough + to-V" },
+            { id: 8, title: "8. So... That / Such... That", formula: "S + be + so + Adj + that + Clause = It + be + such + (a/an) + Adj + N + that + Clause" },
+            { id: 9, title: "9. Be accustomed to / Be used to", formula: "S + usually + V (thói quen) = S + be + used to / accustomed to + V-ing" },
+            { id: 10, title: "10. Used to + V1", formula: "S + often + V2/ed (quá khứ) = S + used to + V1 (đã từng làm gì)" },
+            { id: 11, title: "11. This is the first time / Never", formula: "I have never + V3/ed + before = This is the first time + S + have/has + V3/ed" },
+            { id: 12, title: "12. The last time / It has been", formula: "The last time + S + V2/ed + was + thời gian + ago = It has been + thời gian + since + S + last + V2/ed" },
+            { id: 13, title: "13. Mệnh đề điều kiện If", formula: "S + don't/doesn't + V1, so... = If + S + V2/ed (Câu điều kiện loại 2 trái hiện tại)" },
+            { id: 14, title: "14. Câu tường thuật câu hỏi", formula: "S + asked + me + if/whether + S + V (lùi thì) + trạng ngữ biến đổi" },
+            { id: 15, title: "15. Suggest / Advise", formula: "Let's + V1 / Why don't we + V1...? = S + suggested + V-ing / What about + V-ing...?" },
+            { id: 16, title: "16. Cấu trúc nhờ vả (Get/Have)", formula: "S + pay sb + to-V = S + have + sth + V3/ed (Thể bị động sai khiến)" },
+            { id: 17, title: "17. Đảo ngữ phủ định", formula: "Not only + Trợ động từ + S + V... but also... / Under no circumstances + Trợ động từ + S + V" },
+            { id: 18, title: "18. Succeed in / Manage to", formula: "S + succeeded in + V-ing = S + managed + to-V (Thành công xoay sở làm gì)" },
+            { id: 19, title: "19. Because vs Because of", formula: "Because of + Noun phrase / V-ing = Because + Clause (Chỉ nguyên nhân)" },
+            { id: 20, title: "20. Mệnh đề quan hệ (Relative Clause)", formula: "Sử dụng đại từ quan hệ (Which, Who, Whom...) để nối ghép 2 câu có từ trùng lặp" },
+            { id: 21, title: "21. Câu bị động (Passive Voice)", formula: "Chủ ngữ nhận hành động: S + dạng của động từ Be + V3/ed + (by O)" },
+            { id: 22, title: "22. Difficulty in Ving", formula: "S + V + easily = S + have/had no difficulty (in) + V-ing" },
+            { id: 23, title: "23. Các loại so sánh", formula: "S1 + can't + run as + Fast + as + S2 = S2 + can + run + faster + than + S1" },
+            { id: 24, title: "24. Let / Allow / Permit", formula: "S1 + let + sb + V1 = sb + be + allowed / permitted + to-V + (by S1)" },
+            { id: 25, title: "25. Nhắc lại cấu trúc thành công", formula: "S + managed + to-V = S + succeeded in + V-ing" }
+        ];
+
+        // DATABASE CÂU HỎI TOÀN VẸN 100% CÁC CÂU VÍ DỤ CỦA USER
+        const questionsDatabase = [
+            {
+                id: 1,
+                tag: "1. Câu ước – Wish",
+                prompt: "What a pity! I can’t speak English fluently.",
+                display_question: "Chọn câu viết lại đúng nhất sử dụng cấu trúc ước <b>WISH</b> cho câu trên:",
+                choices: [
+                    { text: "I wish that I could speak English fluently.", key: "A" },
+                    { text: "I wish that I can speak English fluently.", key: "B" },
+                    { text: "I wish that I couldn't speak English fluently.", key: "C" },
+                    { text: "I wish that I spoke English fluently before.", key: "D" }
+                ],
+                correct: "A",
+                explanation: {
+                    step1: "Dịch nghĩa câu gốc: 'Thật đáng tiếc! Tớ không thể nói tiếng Anh trôi chảy.'",
+                    step2: "Phân tích đáp án:<br>A. Đúng ngữ pháp câu ước loại 2.<br>B. Sai vì chưa lùi thì động từ 'can' thành 'could'.<br>C. Sai nghĩa vì ước phủ định ngược nghĩa gốc.<br>D. Sai trạng từ phối hợp thì.",
+                    step3: "Tại sao đúng? Câu ước trái ngược với một thực tế ở hiện tại (hiện tại không thể nói được) ta dùng câu ước loại 2: <b>S + wish + S + V2/ed</b>. 'Can't' chuyển sang khẳng định quá khứ là 'could'.",
+                    step4: "Các câu khác sai vì vi phạm nguyên tắc lùi thì bắt buộc hoặc biến đổi làm lệch nghĩa gốc."
+                }
+            },
+            {
+                id: 2,
+                tag: "2. Take & Spend",
+                prompt: "It took us three hours to find a room for the night.",
+                display_question: "Chọn câu viết lại đúng nhất bắt đầu bằng chủ ngữ <b>We</b>:",
+                choices: [
+                    { text: "We spent three hours to find a room for the night.", key: "A" },
+                    { text: "We spent three hours finding a room for the night.", key: "B" },
+                    { text: "We took three hours finding a room for the night.", key: "C" },
+                    { text: "We spent third hours finding a room for the night.", key: "D" }
+                ],
+                correct: "B",
+                explanation: {
+                    step1: "Dịch nghĩa câu gốc: 'Chúng tôi mất 3 tiếng đồng hồ để tìm một căn phòng qua đêm.'",
+                    step2: "Phân tích đáp án:<br>A. Sai cấu trúc vì sau spent dùng to-V.<br>B. Đúng cấu trúc tương đương chuẩn ngữ pháp.<br>C. Sai vì chủ ngữ là người không đi với động từ 'take' trong ngữ cảnh này.<br>D. Dùng sai từ chỉ số đếm 'third'.",
+                    step3: "Tại sao đúng? Công thức hoán đổi bất biến: <b>It takes/took + sb + time + to-V = S + spend/spent + time + V-ing</b>. Do đó 'took us... to find' đổi sang 'We spent... finding'.",
+                    step4: "Các đáp án khác sai cấu trúc định hình động từ đi sau động từ spend."
+                }
+            },
+            {
+                id: 3,
+                tag: "3. Would rather/Prefer",
+                prompt: "I would rather watch TV than go out.",
+                display_question: "Chọn câu viết lại đúng nhất sử dụng động từ thích <b>PREFER</b>:",
+                choices: [
+                    { text: "I prefer watching TV to going out.", key: "A" },
+                    { text: "I prefer to watch TV than go out.", key: "B" },
+                    { text: "I prefer watching TV than going out.", key: "C" },
+                    { text: "I prefer watch TV to go out.", key: "D" }
+                ],
+                correct: "A",
+                explanation: {
+                    step1: "Dịch nghĩa câu gốc: 'Tớ thà xem tivi còn hơn là đi ra ngoài chơi.'",
+                    step2: "Phân tích đáp án:<br>A. Đúng công thức prefer đi kèm danh động từ.<br>B, C. Sai liên từ so sánh đi kèm vì prefer đi với giới từ 'to'.<br>D. Sai hình thái động từ nguyên mẫu.",
+                    step3: "Tại sao đúng? Công thức chuyển đổi: <b>S + would rather + V1 + than + V1 = S + prefer + V-ing + to + V-ing</b> (Thích làm việc gì hơn làm việc gì khác).",
+                    step4: "Các câu còn lại dùng sai giới từ kết nối so sánh hoặc sai dạng V-ing."
+                }
+            },
+            {
+                id: 4,
+                tag: "4. Worth + Ving/ There is no point/use/good (in)",
+                prompt: "It's quite pointless to complain about the situation.",
+                display_question: "Chọn câu viết lại đúng nhất bắt đầu bằng cụm <b>There is no...</b>:",
+                choices: [
+                    { text: "There is no point in complaining about the situation.", key: "A" },
+                    { text: "There is no use to complain about the situation.", key: "B" },
+                    { text: "There is no worth complaining about the situation.", key: "C" },
+                    { text: "There is no point to complain about the situation.", key: "D" }
+                ],
+                correct: "A",
+                explanation: {
+                    step1: "Dịch nghĩa câu gốc: 'Việc than phiền về tình huống này là hoàn toàn vô ích.'",
+                    step2: "Phân tích đáp án:<br>A. Đúng cụm từ cố định đi với danh động từ.<br>B, D. Sai vì dùng cấu trúc động từ có 'to'.<br>C. Sai cách kết hợp danh từ sau cấu trúc 'There is no'.",
+                    step3: "Tại sao đúng? Cấu trúc tương đương: <b>It's pointless + to-V = There is no point + in + V-ing</b> (Không có ích gì/Chẳng việc gì phải làm gì).",
+                    step4: "Các câu khác vi phạm nguyên lý kết hợp giới từ và dạng động từ của cấu trúc thành ngữ này."
+                }
+            },
+            {
+                id: 5,
+                tag: "5. Like = be interested in = enjoy = keen on",
+                prompt: "Reading scientific books is my interest.",
+                display_question: "Chọn câu viết lại câu đúng nhất bắt đầu bằng chủ ngữ giả định <b>I am...</b>:",
+                choices: [
+                    { text: "I am interested in reading scientific books.", key: "A" },
+                    { text: "I am keen in reading scientific books.", key: "B" },
+                    { text: "I am interested on reading scientific books.", key: "C" },
+                    { text: "I am fond in reading scientific books.", key: "D" }
+                ],
+                correct: "A",
+                explanation: {
+                    step1: "Dịch nghĩa câu gốc: 'Đọc những cuốn sách khoa học là sở thích của tôi.'",
+                    step2: "Phân tích đáp án:<br>A. Đúng giới từ đi kèm tính từ interested.<br>B. Sai giới từ vì keen đi với 'on'.<br>C. Sai giới từ đi với interested.<br>D. Sai giới từ vì fond phải đi với 'of'.",
+                    step3: "Tại sao đúng? Cấu trúc chỉ sở thích đam mê: <b>S + be + interested + in + V-ing/N</b>.",
+                    step4: "Các câu khác đều mắc lỗi dùng sai giới từ đi kèm cố định của tính từ."
+                }
+            },
+            {
+                id: 6,
+                tag: "6. Although + clause = despite + N = in spite of + N",
+                prompt: "He takes part in all of his school activities. His health is poor.",
+                display_question: "Chọn câu viết lại câu đúng nhất sử dụng cụm từ <b>In spite...</b>:",
+                choices: [
+                    { text: "In spite of his poor health, he takes part in all of his school activities.", key: "A" },
+                    { text: "In spite of his health is poor, he takes part in all of his school activities.", key: "B" },
+                    { text: "In spite his poor health, he takes part in all of his school activities.", key: "C" },
+                    { text: "In spite of poor health, he takes part in all of his school activities.", key: "D" }
+                ],
+                correct: "A",
+                explanation: {
+                    step1: "Dịch nghĩa câu gốc: 'Anh ấy tham gia vào tất cả các hoạt động của trường. Sức khỏe của anh ấy rất tệ.'",
+                    step2: "Phân tích đáp án:<br>A. Đúng vì chuyển đổi mệnh đề thành cụm danh từ 'his poor health'.<br>B. Sai vì sau In spite of không được dùng một mệnh đề đầy đủ.<br>C. Sai vì thiếu giới từ 'of'.<br>D. Thiếu tính từ sở hữu 'his' làm câu tối nghĩa.",
+                    step3: "Tại sao đúng? Quy tắc đổi từ mặc dù: <b>Although + S + V + O = In spite of / Despite + Noun phrase / V-ing</b>.",
+                    step4: "Các phương án khác vi phạm lỗi trật tự từ hoặc dùng sai cấu trúc mệnh đề đi kèm."
+                }
+            },
+            {
+                id: 7,
+                tag: "7. Too/Enough",
+                prompt: "The test was too difficult for us to do.",
+                display_question: "Chọn câu viết lại câu tương đương bắt đầu bằng <b>The test wasn’t...</b>:",
+                choices: [
+                    { text: "The test wasn’t easy enough for us to do.", key: "A" },
+                    { text: "The test wasn’t enough easy for us to do.", key: "B" },
+                    { text: "The test wasn’t too easy for us to do.", key: "C" },
+                    { text: "The test wasn’t difficult enough for us to do.", key: "D" }
+                ],
+                correct: "A",
+                explanation: {
+                    step1: "Dịch nghĩa câu gốc: 'Bài kiểm tra quá khó để chúng tôi có thể làm được.'",
+                    step2: "Phân tích đáp án:<br>A. Đúng cấu trúc tính từ trái nghĩa phối hợp với enough.<br>B. Sai vì enough phải đứng sau tính từ (easy enough chứ không phải enough easy).<br>C. Sai nghĩa từ logic.<br>D. Sai nghĩa hoàn toàn so với câu gốc.",
+                    step3: "Tại sao đúng? Cấu trúc chuyển đổi giữa quá và đủ: <b>S + be + too + Adj + to-V = S + be + not + Adj (trái nghĩa) + enough + to-V</b>. Trái nghĩa của 'difficult' (khó) là 'easy' (dễ).",
+                    step4: "Các đáp án khác đặt sai vị trí của từ enough hoặc dùng sai tính từ bổ trợ nghĩa."
+                }
+            },
+            {
+                id: 8,
+                tag: "8. So… That/ Such…. That",
+                prompt: "It was such a difficult exercise that we couldn’t do it.",
+                display_question: "Chọn câu viết lại câu đúng nhất bắt đầu bằng <b>The exercise was...</b>:",
+                choices: [
+                    { text: "The exercise was so difficult that we couldn’t do it.", key: "A" },
+                    { text: "The exercise was so a difficult that we couldn’t do it.", key: "B" },
+                    { text: "The exercise was such difficult that we couldn’t do it.", key: "C" },
+                    { text: "The exercise was so difficult exercise that we couldn’t do it.", key: "D" }
+                ],
+                correct: "A",
+                explanation: {
+                    step1: "Dịch nghĩa câu gốc: 'Đó là một bài tập khó đến nỗi chúng tôi không thể làm được.'",
+                    step2: "Phân tích đáp án:<br>A. Đúng cấu trúc so...that chuẩn mực.<br>B. Sai vì có mạo từ 'a' đứng sau so.<br>C. Sai vì such không đi trực tiếp với tính từ đơn lẻ đứng trước mệnh đề.<br>D. Lặp thừa danh từ 'exercise' ở vế tính từ.",
+                    step3: "Tại sao đúng? Mẫu câu quá...đến nỗi: <b>S + be + so + Adj + that + clause</b>. Chủ ngữ được đưa lên làm trung tâm câu là danh từ 'The exercise'.",
+                    step4: "Các câu khác dùng sai cấu tạo bổ ngữ danh tính từ đứng sau từ định lượng so/such."
+                }
+            },
+            {
+                id: 9,
+                tag: "9. Be accustomed to + Ving = be used to +Ving = be familiar with = often V",
+                prompt: "She usually stays up late.",
+                display_question: "Chọn câu viết lại câu đúng nhất bắt đầu bằng cụm từ gợi ý phủ định ngược <b>She’s not used...</b>:",
+                choices: [
+                    { text: "She’s not used to going to bed early.", key: "A" },
+                    { text: "She’s not used to stay up late.", key: "B" },
+                    { text: "She’s not used to staying up late.", key: "C" },
+                    { text: "She’s not used to go to bed early.", key: "D" }
+                ],
+                correct: "A",
+                explanation: {
+                    step1: "Dịch nghĩa câu gốc: 'Cô ấy thường xuyên thức khuya.' suy ra hành động ngược lại là cô ấy không quen với việc đi ngủ sớm.",
+                    step2: "Phân tích đáp án:<br>A. Đúng ngữ pháp và chuẩn xác tư duy biến đổi từ vựng.<br>B. Sai vì sau used to làm quen phải dùng V-ing.<br>C. Sai nghĩa vì câu gốc bảo cô ấy thường thức khuya nên cô ấy PHẢI quen với việc thức khuya chứ không thể nói 'không quen'.<br>D. Sai hình thái động từ nguyên mẫu.",
+                    step3: "Tại sao đúng? Đây là câu biến đổi nâng cao tư duy logic. Thường xuyên thức khuya tương đương việc không quen ngủ sớm: <b>be not used to + V-ing</b>.",
+                    step4: "Các phương án khác sai bản chất nghĩa logic thực tế hoặc dùng sai động từ nguyên thể."
+                }
+            },
+            {
+                id: 10,
+                tag: "10. Used to + V1",
+                prompt: "He often went swimming when he was a boy.",
+                display_question: "Chọn câu viết lại câu dùng cấu trúc đã từng <b>USED TO</b>:",
+                choices: [
+                    { text: "He used to go swimming when he was a boy.", key: "A" },
+                    { text: "He used to went swimming when he was a boy.", key: "B" },
+                    { text: "He used to going swimming when he was a boy.", key: "C" },
+                    { text: "He used to often go swimming when he was a boy.", key: "D" }
+                ],
+                correct: "A",
+                explanation: {
+                    step1: "Dịch nghĩa câu gốc: 'Anh ấy thường đi bơi khi còn là một cậu bé.'",
+                    step2: "Phân tích đáp án:<br>A. Đúng cấu trúc động từ nguyên mẫu sau used to.<br>B. Sai vì dùng động từ quá khứ 'went'.<br>C. Sai vì dùng dạng danh động từ 'going'.<br>D. Sai vì giữ lại từ 'often' gây thừa nghĩa trùng lặp.",
+                    step3: "Tại sao đúng? Diễn tả thói quen đã chấm dứt trong quá khứ: <b>S + used to + V-nguyên thể (V1)</b>. Động từ 'went' đưa về nguyên mẫu là 'go'.",
+                    step4: "Các câu khác vi phạm lỗi hình thái chia động từ đứng sau cụm từ used to."
+                }
+            },
+            {
+                id: 11,
+                tag: "11. This is the first time.../ I have never…",
+                prompt: "I have never met this strange man before.",
+                display_question: "Chọn câu viết lại đúng nhất bắt đầu bằng cụm <b>This is the first time...</b>:",
+                choices: [
+                    { text: "This is the first time I have met this strange man.", key: "A" },
+                    { text: "This is the first time I met this strange man.", key: "B" },
+                    { text: "This is the first time I have never met this strange man.", key: "C" },
+                    { text: "This is the first time I have met this strange man before.", key: "D" }
+                ],
+                correct: "A",
+                explanation: {
+                    step1: "Dịch nghĩa câu gốc: 'Tôi chưa bao giờ gặp người đàn ông lạ mặt này trước đây.'",
+                    step2: "Phân tích đáp án:<br>A. Đúng chuẩn ngữ pháp thì hiện tại hoàn thành.<br>B. Sai vì dùng thì quá khứ đơn.<br>C. Sai vì giữ lại từ phủ định 'never'.<br>D. Sai vì giữ lại từ 'before' ở cuối câu.",
+                    step3: "Tại sao đúng? Công thức chuyển đổi: <b>S + have/has + never + V3/ed + before = This is the first time + S + have/has + V3/ed</b> (Đây là lần đầu tiên làm việc gì).",
+                    step4: "Các đáp án khác phạm lỗi giữ lại từ báo hiệu của câu phủ định cũ hoặc chia sai thì."
+                }
+            },
+            {
+                id: 12,
+                tag: "12. The last time… hoặc it is/ has been",
+                prompt: "The last time we saw the film was 10 years ago.",
+                display_question: "Chọn câu viết lại đúng nhất bắt đầu bằng cấu trúc thời gian <b>It has been...</b>:",
+                choices: [
+                    { text: "It has been 10 years since we last saw the film.", key: "A" },
+                    { text: "It has been 10 years since we have seen the film.", key: "B" },
+                    { text: "It has been 10 years ago since we saw the film.", key: "C" },
+                    { text: "It has been 10 years since we last see the film.", key: "D" }
+                ],
+                correct: "A",
+                explanation: {
+                    step1: "Dịch nghĩa câu gốc: 'Lần cuối cùng chúng tôi xem bộ phim đó là 10 năm trước.'",
+                    step2: "Phân tích đáp án:<br>A. Đúng chuẩn cấu trúc kết hợp thì.<br>B. Sai vì sau since dùng hiện tại hoàn thành là sai ngữ cảnh hành động cuối.<br>C. Lặp thừa từ 'ago'.<br>D. Sai vì động từ see chưa lùi về quá khứ đơn 'saw'.",
+                    step3: "Tại sao đúng? Cấu trúc: <b>It has been + khoảng thời gian + since + S + (last) + V2/ed</b> (Đã bao lâu trôi qua kể từ lần cuối làm gì).",
+                    step4: "Các đáp án khác vi phạm quy tắc chia thì của mệnh đề đứng sau liên từ since."
+                }
+            },
+            {
+                id: 13,
+                tag: "13. Mệnh đề if",
+                prompt: "Tony doesn’t have free time, so he can’t play football with his friends.",
+                display_question: "Chọn câu điều kiện <b>IF</b> thích hợp viết lại câu trên:",
+                choices: [
+                    { text: "If Tony had free time, he could play football with his friends.", key: "A" },
+                    { text: "If Tony has free time, he can play football with his friends.", key: "B" },
+                    { text: "If Tony didn't have free time, he couldn't play football with his friends.", key: "C" },
+                    { text: "If Tony had free time, he can play football with his friends.", key: "D" }
+                ],
+                correct: "A",
+                explanation: {
+                    step1: "Dịch nghĩa câu gốc: 'Tony không có thời gian rảnh, vì vậy cậu ấy không thể chơi bóng đá cùng bạn bè.'",
+                    step2: "Phân tích đáp án:<br>A. Đúng chuẩn câu điều kiện loại 2 giả định trái thực tế hiện tại.<br>B. Sai vì dùng loại 1 là có thể xảy ra.<br>C. Sai nghĩa thực tế vế câu.<br>D. Sai cấu trúc phối hợp thì giữa hai mệnh đề.",
+                    step3: "Tại sao đúng? Khi giả định một sự việc hoàn toàn trái ngược với thực tế ở hiện tại, ta dùng câu điều kiện loại 2: <b>If + S + V2/ed, S + would/could + V1</b>.",
+                    step4: "Các câu khác chia sai loại điều kiện hoặc giữ nguyên thể khẳng định phủ định lỗi nghĩa."
+                }
+            },
+            {
+                id: 14,
+                tag: "14. Câu tường thuật",
+                prompt: "“Are you having a wonderful time here?”, the teacher asked me.",
+                display_question: "Chọn câu tường thuật gián tiếp đúng ngữ pháp nhất:",
+                choices: [
+                    { text: "The teacher asked me if I was having a wonderful time there.", key: "A" },
+                    { text: "The teacher asked me if was I having a wonderful time here.", key: "B" },
+                    { text: "The teacher asked me if I am having a wonderful time there.", key: "C" },
+                    { text: "The teacher asked me whether I was having a wonderful time here.", key: "D" }
+                ],
+                correct: "A",
+                explanation: {
+                    step1: "Dịch nghĩa câu gốc: ''Các em có đang có một khoảng thời gian tuyệt vời ở đây không?', giáo viên hỏi tôi.'",
+                    step2: "Phân tích đáp án:<br>A. Đúng quy tắc lùi thì và đổi trạng từ chỉ nơi chốn (here -> there).<br>B. Sai vì giữ nguyên trật tự câu hỏi đảo ngữ.<br>C. Sai vì chưa lùi thì động từ 'am' thành 'was'.<br>D. Sai vì quên chưa đổi trạng từ chỉ nơi chốn 'here'.",
+                    step3: "Tại sao đúng? Tường thuật câu hỏi Yes/No câu: <b>S + asked + obj + if/whether + S + V (lùi thì)</b>. Đồng thời trạng từ 'here' bắt buộc đổi thành 'there'.",
+                    step4: "Các phương án khác phạm các lỗi phổ biến như quên đổi trạng ngữ hoặc quên đổi trật tự câu."
+                }
+            },
+            {
+                id: 15,
+                tag: "15. Suggest/advise (Ví dụ 1)",
+                prompt: "“Let’s help the homeless in the neighborhood.” Maria said.",
+                display_question: "Chọn câu tường thuật dùng cấu trúc gợi ý với <b>SUGGEST</b>:",
+                choices: [
+                    { text: "Maria suggested helping the homeless in the neighborhood.", key: "A" },
+                    { text: "Maria suggested to help the homeless in the neighborhood.", key: "B" },
+                    { text: "Maria suggested we will help the homeless in the neighborhood.", key: "C" },
+                    { text: "Maria suggested map helping the homeless in the neighborhood.", key: "D" }
+                ],
+                correct: "A",
+                explanation: {
+                    step1: "Dịch nghĩa câu gốc: ''Chúng ta hãy cùng giúp đỡ những người vô gia cư trong khu dân cư này đi.' Maria nói.'",
+                    step2: "Phân tích đáp án:<br>A. Đúng cấu trúc động từ thêm ing đứng liền sau suggest.<br>B. Sai lỗi kinh điển dùng cấu trúc to-V đứng sau suggest.<br>C. Sai quy tắc chia mệnh đề giả định.<br>D. Chứa cụm từ vô nghĩa.",
+                    step3: "Tại sao đúng? Cấu trúc tường thuật lời rủ rê, đề xuất làm gì: <b>S + suggested + V-ing</b>.",
+                    step4: "Các đáp án còn lại sai cấu trúc kết nối động từ đi theo sau động từ cốt lõi."
+                }
+            },
+            {
+                id: 16,
+                tag: "15. Suggest/advise (Ví dụ 2)",
+                prompt: "Why don’t we use banana leaves instead of plastics bags to save energy?",
+                display_question: "Chọn câu chuyển đổi tương đương bắt đầu bằng cấu trúc hỏi ý kiến <b>What about...?</b>:",
+                choices: [
+                    { text: "What about using banana leaves instead of plastics bags to save energy?", key: "A" },
+                    { text: "What about use banana leaves instead of plastics bags to save energy?", key: "B" },
+                    { text: "What about to use banana leaves instead of plastics bags to save energy?", key: "C" },
+                    { text: "What about we use banana leaves instead of plastics bags to save energy?", key: "D" }
+                ],
+                correct: "A",
+                explanation: {
+                    step1: "Dịch nghĩa câu gốc: 'Tại sao chúng ta không dùng lá chuối thay cho túi nilon để tiết kiệm năng lượng nhỉ?'",
+                    step2: "Phân tích đáp án:<br>A. Đúng chuẩn ngữ pháp danh động từ đứng sau giới từ about.<br>B, C, D. Đều sai cấu trúc ngữ pháp đi kèm sau cụm từ gợi ý hỏi.",
+                    step3: "Tại sao đúng? Mẫu câu gợi ý đề xuất tương đương: <b>Why don't we + V1...? = What about + V-ing...?</b>.",
+                    step4: "Các câu khác vi phạm lỗi hình thái chia từ đứng sau giới từ 'about'."
+                }
+            },
+            {
+                id: 17,
+                tag: "16. Get/Have",
+                prompt: "We paid some people to landscape the garden for us last year.",
+                display_question: "Chọn câu viết lại đúng nhất áp dụng thể truyền khiến bị động với từ <b>HAD</b>:",
+                choices: [
+                    { text: "We had the garden landscaped last year.", key: "A" },
+                    { text: "We had some people landscape the garden last year.", key: "B" },
+                    { text: "We had the garden to landscape last year.", key: "C" },
+                    { text: "We had landscaped the garden last year.", key: "D" }
+                ],
+                choices_forced_correct_index: 0, // Ensure option A maps correctly if needed
+                correct: "A",
+                explanation: {
+                    step1: "Dịch nghĩa câu gốc: 'Chúng tôi đã trả tiền cho một vài người để thiết kế cảnh quan khu vườn vào năm ngoái.'",
+                    step2: "Phân tích đáp án:<br>A. Đúng chuẩn cấu trúc bị động sai khiến nhờ vả.<br>B. Sai vì câu gốc nhấn mạnh cấu trúc đầu mục tiêu là 'the garden', nếu dùng người phải là 'had some people V1' nhưng đề bài hướng tới dùng vật thể bị động đứng trước.<br>C, D. Sai công thức cấu tạo.",
+                    step3: "Tại sao đúng? Áp dụng cấu trúc bị động nhờ vả thuê mướn dịch vụ: <b>S + have/had + Sth (vật) + V3/ed</b>. Khu vườn 'the garden' nhận hành động thiết kế nên động từ thêm ed thành 'landscaped'.",
+                    step4: "Các phương án khác dùng sai trật tự từ hoặc cấu trúc chủ động bị động lẫn lộn."
+                }
+            },
+            {
+                id: 18,
+                tag: "17. Đảo ngữ (Ví dụ 1)",
+                prompt: "It’s the cheapest watch but it’s the nicest.",
+                display_question: "Chọn câu viết lại câu đúng nhất bắt đầu bằng cụm đảo ngữ tăng cường <b>Not only...</b>:",
+                choices: [
+                    { text: "Not only is it the cheapest watch but it is also the nicest.", key: "A" },
+                    { text: "Not only it is the cheapest watch but it is also the nicest.", key: "B" },
+                    { text: "Not only is it the cheapest watch but also it is the nicest.", key: "C" },
+                    { text: "Not only was it the cheapest watch but it is also the nicest.", key: "D" }
+                ],
+                correct: "A",
+                explanation: {
+                    step1: "Dịch nghĩa câu gốc: 'Nó là chiếc đồng hồ rẻ nhất nhưng nó lại đẹp nhất.'",
+                    step2: "Phân tích đáp án:<br>A. Đúng chuẩn đảo ngữ vế đầu và cấu trúc tương hợp vế sau.<br>B. Sai vì chưa đảo động từ 'is' lên trước chủ ngữ 'it'.<br>C. Sai vị trí đặt của cụm 'but also'.<br>D. Sai thì của động từ vế đầu (gốc là hiện tại 'is' chứ không phải quá khứ 'was').",
+                    step3: "Tại sao đúng? Cấu trúc đảo ngữ không những... mà còn: <b>Not only + Trợ động từ/Be + S + V, but + S + also + V</b>.",
+                    step4: "Các phương án khác vi phạm lỗi trật tự từ đảo ngữ hoặc chia sai mốc thời gian của câu thường."
+                }
+            },
+            {
+                id: 19,
+                tag: "17. Đảo ngữ (Ví dụ 2)",
+                prompt: "There is no situation in which we will allow the management to lower wages.",
+                display_question: "Chọn câu viết lại câu đúng nhất bắt đầu bằng cụm từ tuyệt đối hạn chế <b>Under no...</b>:",
+                choices: [
+                    { text: "Under no circumstances will we allow the management to lower wages.", key: "A" },
+                    { text: "Under no circumstances we will allow the management to lower wages.", key: "B" },
+                    { text: "Under no circumstances will allow we the management to lower wages.", key: "C" },
+                    { text: "Under no situation we allow the management to lower wages.", key: "D" }
+                ],
+                correct: "A",
+                explanation: {
+                    step1: "Dịch nghĩa câu gốc: 'Không có bất kỳ tình huống nào mà chúng tôi cho phép ban quản lý hạ mức lương xuống.'",
+                    step2: "Phân tích đáp án:<br>A. Đúng chuẩn đảo ngữ với cụm trạng từ phủ định cố định.<br>B. Sai vì thiếu đảo trợ động từ 'will' lên trước chủ ngữ 'we'.<br>C. Đảo sai vị trí cấu tạo động từ chính.<br>D. Sai cấu trúc từ vựng.",
+                    step3: "Tại sao đúng? Cấu trúc đảo ngữ mang tính chất cấm đoán tuyệt đối: <b>Under no circumstances + Trợ động từ + S + V</b> (Trong bất kỳ hoàn cảnh nào cũng không).",
+                    step4: "Các đáp án khác quên không đảo ngữ trợ động từ lên trước hoặc sắp xếp sai vị trí đại từ tân ngữ chủ ngữ."
+                }
+            },
+            {
+                id: 20,
+                tag: "18. Succeed in doing sth = manage to do sth",
+                prompt: "He succeeded in passing the test.",
+                display_question: "Chọn câu viết lại câu đúng nhất bắt đầu bằng động từ xoay sở thành công <b>He...</b>:",
+                choices: [
+                    { text: "He managed to pass the test.", key: "A" },
+                    { text: "He managed passing the test.", key: "B" },
+                    { text: "He succeeded to pass the test.", key: "C" },
+                    { text: "He managed in passing the test.", key: "D" }
+                ],
+                correct: "A",
+                explanation: {
+                    step1: "Dịch nghĩa câu gốc: 'Anh ấy đã thành công trong việc vượt qua bài kiểm tra.'",
+                    step2: "Phân tích đáp án:<br>A. Đúng cấu trúc động từ đi kèm to-V của từ manage.<br>B, D. Sai dạng hình thái động từ đi sau manage.<br>C. Sai giới từ quy định đi kèm động từ succeed.",
+                    step3: "Tại sao đúng? Cấu trúc chuyển đổi tương đương: <b>S + succeed in + V-ing = S + managed + to-V</b> (Xoay sở thành công làm việc gì).",
+                    step4: "Các câu khác dính lỗi kết hợp sai hình thái động từ to-V và danh động từ V-ing chéo nhau."
+                }
+            },
+            {
+                id: 21,
+                tag: "19. Because, because of",
+                prompt: "A lot of children and old people have to go to hospitals these days because of the hot weather.",
+                display_question: "Chọn câu viết lại câu đúng nhất đổi sang liên từ bắt đầu bằng mệnh đề <b>Because the weather...</b>:",
+                choices: [
+                    { text: "Because the weather is hot, a lot of children and old people have to go to hospitals these days.", key: "A" },
+                    { text: "Because the weather was hot, a lot of children and old people have to go to hospitals these days.", key: "B" },
+                    { text: "Because of the weather is hot, a lot of children and old people have to go to hospitals these days.", key: "C" },
+                    { text: "Because the hot weather, a lot of children and old people have to go to hospitals these days.", key: "D" }
+                ],
+                correct: "A",
+                explanation: {
+                    step1: "Dịch nghĩa câu gốc: 'Rất nhiều trẻ em và người già phải nhập viện trong những ngày này vì thời tiết nắng nóng.'",
+                    step2: "Phân tích đáp án:<br>A. Đúng chuẩn ngữ pháp mệnh đề nguyên nhân ở hiện tại.<br>B. Sai thì động từ vì gốc câu dùng 'have to' ở hiện tại chứ không phải quá khứ.<br>C. Dùng sai vì cụm 'because of' không đứng trước mệnh đề.<br>D. Dùng sai vì sau 'because' đơn lập bắt buộc phải là mệnh đề gồm cả chủ vị.",
+                    step3: "Tại sao đúng? Quy tắc chuyển đổi: <b>Because of + Cụm danh từ = Because + Mệnh đề (S + V)</b>. Cụm danh từ 'the hot weather' đổi thành mệnh đề đầy đủ trạng thái là 'the weather is hot'.",
+                    step4: "Các phương án khác vi phạm quy tắc lựa chọn từ loại liên từ hoặc chia sai mốc thời gian thực tế."
+                }
+            },
+            {
+                id: 22,
+                tag: "20. Mệnh đề quan hệ",
+                prompt: "The temple was built in the 14th century. We visited it two weeks ago.",
+                display_question: "Chọn câu viết lại kết hợp đại từ quan hệ <b>The temple which...</b> chính xác nhất:",
+                choices: [
+                    { text: "The temple which we visited two weeks ago was built in the 14th century.", key: "A" },
+                    { text: "The temple which we visited it two weeks ago was built in the 14th century.", key: "B" },
+                    { text: "The temple which was built in the 14th century we visited it two weeks ago.", key: "C" },
+                    { text: "The temple which we visit two weeks ago was built in the 14th century.", key: "D" }
+                ],
+                correct: "A",
+                explanation: {
+                    step1: "Dịch nghĩa câu gốc: 'Ngôi đền được xây dựng vào thế kỷ 14. Chúng tôi đã đến thăm nó hai tuần trước.'",
+                    step2: "Phân tích đáp án:<br>A. Đúng quy tắc lồng ghép mệnh đề quan hệ xác định vật thể.<br>B, C. Đều sai nghiêm trọng vì lặp lại tân ngữ thừa 'it' sau khi đã dùng đại từ quan hệ 'which'.<br>D. Chia sai thì động từ hành động thăm trong quá khứ.",
+                    step3: "Tại sao đúng? Khi dùng đại từ quan hệ vật thể 'which' thay thế cho tân ngữ của câu sau, ta phải lược bỏ hoàn toàn từ trùng lặp 'it' của câu gốc để tránh lỗi trùng lặp ngữ pháp.",
+                    step4: "Các câu khác phạm lỗi kinh điển giữ lại tân ngữ cũ hoặc viết sai dòng thời gian của câu kể."
+                }
+            },
+            {
+                id: 23,
+                tag: "21. Bị động (Ví dụ 1)",
+                prompt: "People have domesticated cats for thousands of years.",
+                display_question: "Chọn câu chuyển đổi sang thể bị động bắt đầu bằng danh từ số nhiều <b>Cats...</b>:",
+                choices: [
+                    { text: "Cats have been domesticated for thousands of years.", key: "A" },
+                    { text: "Cats has been domesticated for thousands of years.", key: "B" },
+                    { text: "Cats were domesticated for thousands of years.", key: "C" },
+                    { text: "Cats have domesticated for thousands of years.", key: "D" }
+                ],
+                correct: "A",
+                explanation: {
+                    step1: "Dịch nghĩa câu gốc: 'Con người đã thuần hóa loài mèo trong hàng ngàn năm qua.'",
+                    step2: "Phân tích đáp án:<br>A. Đúng chuẩn cấu trúc bị động của thì hiện tại hoàn thành với chủ ngữ số nhiều.<br>B. Sai vì dùng trợ động từ 'has' đi với chủ ngữ số nhiều Cats.<br>C. Sai vì tự ý đổi thì sang quá khứ đơn.<br>D. Thiếu từ 'been' biến câu thành chủ động vô lý.",
+                    step3: "Tại sao đúng? Công thức bị động hiện tại hoàn thành: <b>S (số nhiều) + have + been + V3/ed</b>. Do 'Cats' là số nhiều nên đi với trợ động từ 'have been'.",
+                    step4: "Các câu khác vi phạm lỗi hòa hợp chủ ngữ số ít số nhiều hoặc cấu trúc cấu tạo bị động."
+                }
+            },
+            {
+                id: 24,
+                tag: "21. Bị động (Ví dụ 2)",
+                prompt: "They are going to build a castle in this area.",
+                display_question: "Chọn câu chuyển đổi sang thể bị động tương lai gần bắt đầu bằng mạo từ <b>A...</b>:",
+                choices: [
+                    { text: "A castle is going to be built in this area.", key: "A" },
+                    { text: "A castle are going to be built in this area.", key: "B" },
+                    { text: "A castle is going to build in this area.", key: "C" },
+                    { text: "A castle was going to be built in this area.", key: "D" }
+                ],
+                correct: "A",
+                explanation: {
+                    step1: "Dịch nghĩa câu gốc: 'Họ chuẩn bị xây dựng một tòa lâu đài đồ sộ ở khu vực này.'",
+                    step2: "Phân tích đáp án:<br>A. Đúng ngữ pháp bị động tương lai gần của danh từ số ít.<br>B. Sai vì dùng động từ to be số nhiều 'are'.<br>C. Thiếu từ 'be' và chưa đổi động từ chính sang dạng phân từ hai 'built'.<br>D. Chia sai mốc thời gian quá khứ.",
+                    step3: "Tại sao đúng? Bị động với cấu trúc tương lai Be going to: <b>S + am/is/are + going to + be + V3/ed</b>. Danh từ số ít 'A castle' nhận hành động nên đi với 'is going to be built'.",
+                    step4: "Các câu còn lại dùng sai động từ to be hoặc sai hình thái của động từ bất quy tắc xây dựng."
+                }
+            },
+            {
+                id: 25,
+                tag: "22. Have not difficulty/ problem/obstacle (in) Ving",
+                prompt: "Tom passed the test easily.",
+                display_question: "Chọn câu viết lại câu đúng ngữ pháp nhất bắt đầu bằng cụm <b>Tom had no difficulty...</b>:",
+                choices: [
+                    { text: "Tom had no difficulty (in) passing the test.", key: "A" },
+                    { text: "Tom had no difficulty (in) to pass the test.", key: "B" },
+                    { text: "Tom had no difficulty (in) pass the test.", key: "C" },
+                    { text: "Tom had not difficulty (in) passing the test.", key: "D" }
+                ],
+                correct: "A",
+                explanation: {
+                    step1: "Dịch nghĩa câu gốc: 'Tom đã vượt qua bài kiểm tra một cách vô cùng dễ dàng.'",
+                    step2: "Phân tích đáp án:<br>A. Đúng chuẩn cấu trúc danh động từ đứng sau thành ngữ chỉ mức độ trôi chảy.<br>B, C. Đều sai hình thái động từ nguyên mẫu có to hoặc không to.<br>D. Sai từ hạn định phủ định danh từ phải dùng 'no' chứ không dùng trạng từ 'not'.",
+                    step3: "Tại sao đúng? Cấu trúc không gặp khó khăn khi làm gì: <b>S + have/had + no difficulty + (in) + V-ing</b>. Hành động vượt qua 'passed' đưa về dạng Gerund là 'passing'.",
+                    step4: "Các phương án còn lại dùng sai loại từ phủ định danh từ hoặc cấu trúc động từ nguyên mẫu đi sau."
+                }
+            },
+            {
+                id: 26,
+                tag: "23. Các loại so sánh",
+                prompt: "My friend can’t run as fast as I can.",
+                display_question: "Chọn câu so sánh hơn viết lại câu trên bắt đầu bằng chủ ngữ <b>I can...</b>:",
+                choices: [
+                    { text: "I can run faster than my friend.", key: "A" },
+                    { text: "I can run more fast than my friend.", key: "B" },
+                    { text: "I can run as fast than my friend.", key: "C" },
+                    { text: "I can run faster as my friend.", key: "D" }
+                ],
+                correct: "A",
+                explanation: {
+                    step1: "Dịch nghĩa câu gốc: 'Bạn của tớ không thể chạy nhanh bằng tớ được.' suy ra tớ chạy nhanh hơn bạn của tớ.",
+                    step2: "Phân tích đáp án:<br>A. Đúng chuẩn ngữ pháp so sánh hơn với trạng từ ngắn.<br>B. Sai vì dùng 'more fast' lỗi cơ bản từ loại.<br>C, D. Kết hợp sai liên từ so sánh hơn phải đi với liên từ 'than'.",
+                    step3: "Tại sao đúng? 'Fast' vừa là tính từ vừa là trạng từ ngắn. Khi chuyển sang so sánh hơn ta thêm đuôi er thành 'faster' kết hợp liên từ so sánh bắt buộc là 'than': <b>S1 + V + Adj/Adv-er + than + S2</b>.",
+                    step4: "Các đáp án khác vi phạm lỗi thêm từ chỉ mức độ hoặc dùng sai cặp từ liên kết so sánh."
+                }
+            },
+            {
+                id: 27,
+                tag: "24. Let/allow/permit",
+                prompt: "My mother let me go out last night.",
+                display_question: "Chọn câu bị động viết lại câu đúng ngữ pháp nhất bắt đầu bằng chủ ngữ <b>I...</b>:",
+                choices: [
+                    { text: "I was allowed to go out last night by my mother.", key: "A" },
+                    { text: "I was let to go out last night by my mother.", key: "B" },
+                    { text: "I allowed to go out last night by my mother.", key: "C" },
+                    { text: "I was allowed go out last night by my mother.", key: "D" }
+                ],
+                correct: "A",
+                explanation: {
+                    step1: "Dịch nghĩa câu gốc: 'Mẹ tớ đã cho phép tớ đi ra ngoài chơi vào tối hôm qua.'",
+                    step2: "Phân tích đáp án:<br>A. Đúng chuẩn bị động chuyển đổi từ let sang allow.<br>B. Sai vì động từ 'let' không dùng ở dạng bị động theo cấu trúc nguyên mẫu có to như vậy.<br>C. Thiếu to be biến câu thành chủ động ngược nghĩa.<br>D. Thiếu giới từ 'to' đứng trước động từ hành động.",
+                    step3: "Tại sao đúng? Khi chuyển câu chủ động chứa cấu trúc 'let sb do sth' sang thể bị động, ta bắt buộc phải thay thế bằng động từ allow/permit theo công thức: <b>S + be + allowed/permitted + to-V</b>.",
+                    step4: "Các phương án khác dính lỗi cố tình dùng bị động của từ let hoặc thiếu giới từ định hình cấu trúc ngữ pháp."
+                }
+            },
+            {
+                id: 28,
+                tag: "25. Succeed in doing sth = manage to do sth (Nhắc lại)",
+                prompt: "He succeeded in passing the test.",
+                display_question: "Chọn câu viết lại câu tương đương đúng ngữ pháp nhất sử dụng cấu trúc với động từ xoay sở thành công:",
+                choices: [
+                    { text: "He managed to pass the test.", key: "A" },
+                    { text: "He managed passing the test.", key: "B" },
+                    { text: "He was managed to pass the test.", key: "C" },
+                    { text: "He succeeded to pass the test.", key: "D" }
+                ],
+                correct: "A",
+                explanation: {
+                    step1: "Dịch nghĩa câu gốc: 'Anh ấy đã thành công vượt qua bài thi.'",
+                    step2: "Phân tích đáp án:<br>A. Đúng chuẩn cấu trúc động từ chủ động đi kèm động từ nguyên mẫu có to.<br>B. Sai hình thái động từ đuôi ing.<br>C. Sai vì chuyển sang dạng thể bị động vô lý.<br>D. Sai giới từ quy ước của động từ gốc ban đầu.",
+                    step3: "Tại sao đúng? Tương tự câu số 20, đây là cấu trúc đối sánh lặp lại kiểm tra độ nhớ của học sinh: <b>S + succeed in + V-ing = S + managed + to-V</b>.",
+                    step4: "Các phương án còn lại kết hợp sai dạng thức động từ hoặc sai thể của câu."
+                }
+            }
+        ];
+
+        let trackedStudentAnswers = {};
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playDingSound() {
+            try {
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523.25, now); // C5
+                osc.frequency.setValueAtTime(659.25, now + 0.08); // E5
+                osc.frequency.setValueAtTime(783.99, now + 0.16); // G5
+                osc.frequency.setValueAtTime(1046.50, now + 0.24); // C6
+                gain.gain.setValueAtTime(0, now);
+                gain.gain.linearRampToValueAtTime(0.25, now + 0.05);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                osc.start(now); osc.stop(now + 0.45);
+            } catch(e) {}
+        }
+
+        function playBuzzSound() {
+            try {
+                const now = audioCtx.currentTime;
+                const frequencies = [392.00, 349.23, 261.63]; // Chuỗi âm buồn hóm hỉnh
+                frequencies.forEach((freq, idx) => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(freq, now + (idx * 0.12));
+                    gain.gain.setValueAtTime(0, now + (idx * 0.12));
+                    gain.gain.linearRampToValueAtTime(0.18, now + (idx * 0.12) + 0.02);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + (idx * 0.12) + 0.14);
+                    osc.connect(gain); gain.connect(audioCtx.destination);
+                    osc.start(now + (idx * 0.12)); osc.stop(now + (idx * 0.12) + 0.14);
+                });
+            } catch(e) {}
+        }
+
+        function runConfettiExplosion() {
+            const canvas = document.getElementById('canvas-confetti-layer');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+            
+            let particles = [];
+            const paletteColors = ['#FFC107', '#FF5722', '#E91E63', '#9C27B0', '#00C9A7', '#00D26A', '#8854C0'];
+            
+            for (let i = 0; i < 70; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    radius: Math.random() * 4 + 4,
+                    density: Math.random() * canvas.height,
+                    color: paletteColors[Math.floor(Math.random() * paletteColors.length)],
+                    tilt: Math.random() * 10 - 5,
+                    tiltIncremental: Math.random() * 0.05 + 0.02,
+                    angle: 0
+                });
+            }
+            
+            function animateConfettiFrame() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                let continueAnimation = false;
+                particles.forEach((p) => {
+                    p.angle += p.tiltIncremental;
+                    p.y += (Math.cos(p.density) + 3 + p.radius / 2) / 1.8;
+                    p.x += Math.sin(p.angle);
+                    if (p.y <= canvas.height) continueAnimation = true;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = p.color;
+                    ctx.fill();
+                });
+                if (continueAnimation) requestAnimationFrame(animateConfettiFrame);
+            }
+            animateConfettiFrame();
+        }
+
+        function shuffleArrayChoices(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                const temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+            return array;
+        }
+
+        function buildAndRenderInterface() {
+            // Render lý thuyết sạch lên giao diện
+            const theoryTarget = document.getElementById('theory-box-target');
+            theoryTarget.innerHTML = '';
+            theoryDataList.forEach(t => {
+                const row = document.createElement('div');
+                row.className = 'theory-item-row';
+                row.innerHTML = `
+                    <div class="theory-item-title">${t.title}</div>
+                    <div class="theory-item-formula">${t.formula}</div>
+                `;
+                theoryTarget.appendChild(row);
+            });
+
+            // Render câu hỏi trắc nghiệm
+            const quizTarget = document.getElementById('quiz-dynamic-render-target');
+            quizTarget.innerHTML = '';
+            
+            questionsDatabase.forEach((q, idx) => {
+                const cardNode = document.createElement('div');
+                cardNode.className = 'quiz-card';
+                cardNode.id = `card-wrapper-id-${q.id}`;
+                
+                let shuffledChoices = [...q.choices];
+                shuffleArrayChoices(shuffledChoices);
+                
+                let choicesHtmlContent = '';
+                shuffledChoices.forEach(choice => {
+                    choicesHtmlContent += `
+                        <button class="choice-btn" id="btn-choice-item-${q.id}-${choice.key}" onclick="evaluateUserChoice(${q.id}, '${choice.key}', '${q.correct}')">
+                            <span class="choice-prefix">${choice.key}</span>
+                            <span class="choice-body-text">${choice.text}</span>
+                        </button>
+                    `;
+                });
+
+                cardNode.innerHTML = `
+                    <div class="structure-tag">📝 Cấu trúc ${idx + 1}</div>
+                    <div class="question-header">
+                        <div class="question-number">${idx + 1}</div>
+                        <div class="question-text">${q.display_question}</div>
+                    </div>
+                    <div class="prompt-sentence-box">${q.prompt}</div>
+                    <div class="choices-grid" id="choices-grid-box-id-${q.id}">
+                        ${choicesHtmlContent}
+                    </div>
+                    
+                    <div class="explanation-box" id="explanation-box-view-id-${q.id}">
+                        <div class="explanation-title">💡 PHẦN GIẢI THÍCH CHI TIẾT TỪ CÔ LÊ HẰNG:</div>
+                        <div class="explanation-step">
+                            <div class="step-heading">🔹 Bước 1: Ý nghĩa câu hỏi gốc</div>
+                            <div>${q.explanation.step1}</div>
+                        </div>
+                        <div class="explanation-step">
+                            <div class="step-heading">🔹 Bước 2: Liệt kê và rà soát phương án</div>
+                            <div>${q.explanation.step2}</div>
+                        </div>
+                        <div class="explanation-step">
+                            <div class="step-heading">🔹 Bước 3: Tại sao đáp án này ĐÚNG?</div>
+                            <div style="font-weight: 700; color: #00A955;">${q.explanation.step3}</div>
+                        </div>
+                        <div class="explanation-step">
+                            <div class="step-heading">🔹 Bước 4: Tại sao các phương án khác SAI?</div>
+                            <div>${q.explanation.step4}</div>
+                        </div>
+                    </div>
+                `;
+                quizTarget.appendChild(cardNode);
+            });
+        }
+
+        function evaluateUserChoice(questionId, chosenKey, correctKey) {
+            if (trackedStudentAnswers[questionId] !== undefined) return;
+            
+            trackedStudentAnswers[questionId] = chosenKey;
+            const targetBtnNode = document.getElementById(`btn-choice-item-${questionId}-${chosenKey}`);
+            const correctBtnNode = document.getElementById(`btn-choice-item-${questionId}-${correctKey}`);
+            const parentCardNode = document.getElementById(`card-wrapper-id-${questionId}`);
+            
+            if (chosenKey === correctKey) {
+                targetBtnNode.classList.add('correct-state');
+                playDingSound();
+                runConfettiExplosion();
+            } else {
+                targetBtnNode.classList.add('wrong-state');
+                if (correctBtnNode) correctBtnNode.classList.add('correct-state');
+                parentCardNode.classList.add('shake-animation');
+                playBuzzSound();
+                setTimeout(() => parentCardNode.classList.remove('shake-animation'), 450);
+            }
+
+            const childrenButtons = document.getElementById(`choices-grid-box-id-${questionId}`).getElementsByClassName('choice-btn');
+            for (let btn of childrenButtons) { btn.disabled = true; }
+
+            document.getElementById(`explanation-box-view-id-${questionId}`).style.display = 'block';
+        }
+
+        function processExamGrading() {
+            let correctCount = 0;
+            const totalQuestionsCount = questionsDatabase.length;
+            
+            questionsDatabase.forEach(q => {
+                if (trackedStudentAnswers[q.id] === q.correct) {
+                    correctCount++;
+                }
+            });
+
+            const rawSuccessPercentage = (correctCount / totalQuestionsCount) * 100;
+            const scoreDisplaySlot = document.getElementById('score-counter-slot');
+            const commentDisplaySlot = document.getElementById('teacher-feedback-slot');
+
+            scoreDisplaySlot.innerText = `${correctCount} / ${totalQuestionsCount}`;
+
+            if (rawSuccessPercentage < 50) {
+                commentDisplaySlot.innerText = "Điểm chưa cao lắm, con nhớ xem kỹ lại 4 bước giải thích của từng câu để tích lũy kiến thức nhé! Cô tin con làm được! 💕";
+            } else if (rawSuccessPercentage >= 50 && rawSuccessPercentage <= 80) {
+                commentDisplaySlot.innerText = "Con làm bài khá tốt rồi đó! Hãy ghi lại những câu bị nhầm lẫn vào sổ tay để đạt điểm tuyệt đối lần tới nhé! 🌟";
+            } else {
+                commentDisplaySlot.innerText = "Tuyệt vời ông mặt trời! Con có tư duy ngữ pháp rất xuất sắc, giữ vững phong độ này con nhé! 🎉💎";
+            }
+
+            document.getElementById('result-summary-popup').classList.add('active');
+        }
+
+        function resetAndRestartQuiz() {
+            document.getElementById('result-summary-popup').classList.remove('active');
+            trackedStudentAnswers = {};
+            buildAndRenderInterface();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.onload = () => {
+            buildAndRenderInterface();
+        };
+    </script>
+</body>
+</html>
